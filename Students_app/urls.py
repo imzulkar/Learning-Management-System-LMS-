@@ -10,6 +10,7 @@ urlpatterns =[
     path('userauthentication/',views.userAuthentication,name='userauthentication'),
     path('logout/',views.userLogout,name='logout'),
     path('course_register/',views.CourseRegistration,name='course_register'),
+    path('profile/',views.StudentProfile,name='student_profile'),
 
 
 ]

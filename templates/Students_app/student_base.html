@@ -55,8 +55,8 @@
         <h5 class="sidenav-heading">Student Section</h5>
         <ul id="side-main-menu" class="side-menu list-unstyled">
             {% if user.is_authenticated %}
-          <li><a href="index.html"> <i class="fa fa-home"></i></i>Dashboard </a></li>
-          <li><a href="forms.html"> <i class="fa fa-user"></i>Profile </a></li>
+          <li><a href="{% url 'Students_app:studentdashboard' %}"> <i class="fa fa-home"></i></i>Dashboard </a></li>
+          <li><a href="{% url 'Students_app:student_profile' %}"> <i class="fa fa-user"></i>Profile </a></li>
           <li><a href="charts.html"> <i class="fa fa-pencil-square-o"></i>Profile Update </a></li>
           <li><a href="tables.html"> <i class="fa fa-key"></i>Password Change </a></li>
           <li><a href="tables.html"> <i class="fa fa-th-list"></i>Payment Ledger </a></li>

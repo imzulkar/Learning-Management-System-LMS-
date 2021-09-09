@@ -26,7 +26,7 @@ def studentRegistration(request):
         form = StudentForm()
         form2 = StudentLinkForm()
 
-    return render(request,'Students_app/newstudent_registration.html',context={'form':form,'form2':form2})
+    return render(request,'Teachers_app/newstudent_registration.html',context={'form':form,'form2':form2})
 def indexView(request):
     current_user = request.user
     user_id = current_user.id
@@ -48,6 +48,29 @@ def studenDashboard(request):
     user_more_info = StudentsInfo.objects.get(userId__pk=user_id)
 
     return render(request,'Students_app/student_Dashboard.html',context={'user_info':user_info, 'user_more_info':user_more_info})
+
+@login_required(login_url='Students_app:login')
+def StudentProfile(request):
+    current_user = request.user
+    user_id = current_user.id
+    user_info = User.objects.get(pk=user_id)
+    user_more_info = StudentsInfo.objects.get(userId__pk=user_id)
+    return render(request, 'Students_app/student_profile.html',
+                  context={'user_info': user_info, 'user_more_info': user_more_info})
+
+
+def StudentProfileUpdate(request):
+    if request.method=='POST':
+        form = StudentForm(data=request.POST)
+        form2 = StudentLinkForm(data=request.POST)
+        if form.is_valid() and form2.is_valid():
+            user = form.save()
+            user.set_password(user.password)
+            user.save()
+            user_info = form2.save(commit=False)
+            user_info.userId = user
+            user_info.save()
+    return render(request, 'Students_app/newstudent_registration.html', context={'form': form, 'form2': form2})
 
 # def userLogin(request):
 #     form = AuthenticationForm()
@@ -85,7 +108,7 @@ def CourseRegistration(request):
         form = CourseRegistrationForm(data=request.POST)
         current_user = request.user
         user_id = current_user.id
-        user_info = StudentsInfo.objects.get(student__pk = user_id)
+        user_info = StudentsInfo.objects.get(userId__pk=user_id)
         student_info = form.save(commit=False)
         student_info.student = user_info
         # Twice course registration check
