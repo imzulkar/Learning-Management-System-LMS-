@@ -17,10 +17,28 @@ class StudentLinkForm(ModelForm):
         model = StudentsInfo
         fields= ('studentID',)
 
+class DateInput(forms.DateInput):
+    input_type = "date"
+
+    def __init__(self, **kwargs):
+        # kwargs["format"] = "%Y-%m-%d"
+        kwargs["format"] = "%d-%m-%Y"
+        super().__init__(**kwargs)
+
+
+class updateStudentProfile(ModelForm):
+    class Meta:
+        model= StudentsInfo
+        exclude = ('userId', 'studentID','student',)
+        widgets ={
+            'dateOfBirth':DateInput(format=["%d-%m-%Y"],),
+        }
+
 
 class loginForm(forms.Form):
     username = forms.CharField(max_length=50)
     password = forms.CharField(widget=forms.PasswordInput)
+
 
 
 class CourseRegistrationForm(ModelForm):

@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 # Create your models here.
+
 
 class TeachersDesignation(models.Model):
     designation = models.CharField(max_length=40)
@@ -19,7 +21,7 @@ class TeachersFaculty(models.Model):
         return self.faculty
 
 class TeachersList(models.Model):
-    userId = models.OneToOneField(User,on_delete=models.CASCADE)
+    userId = models.OneToOneField(User,related_name='teachers_info',on_delete=models.CASCADE)
     teacher = models.BooleanField(default=True)
     empid = models.IntegerField()
     designation = models.ForeignKey(TeachersDesignation, on_delete=models.CASCADE)
@@ -30,4 +32,7 @@ class TeachersList(models.Model):
 
     def __str__(self):
         return str(self.empid)
+
+    def get_absolute_url(self):
+        return reverse('Admin_panel:add_teacher')
 

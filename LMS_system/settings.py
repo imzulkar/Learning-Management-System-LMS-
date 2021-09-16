@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'Teachers_app',
     'Students_app',
-    'Accademic_details',
+    'Admin_panel',
     'channels',
     'chat_app',
 
@@ -84,8 +84,12 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'lms_system',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 
@@ -133,6 +137,13 @@ STATICFILES_DIRS = [
 # Media
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR/'media'
+
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda o: "/admin_panel/addteacher/",
+
+}
+
+
 
 # STATIC_ROOT = BASE_DIR/'static'
 # Default primary key field type

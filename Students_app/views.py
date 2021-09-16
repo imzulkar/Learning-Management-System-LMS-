@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect,HttpResponseRedirect
+from django.shortcuts import render,redirect,HttpResponseRedirect,HttpResponse
 from django.contrib.auth import login,logout,authenticate
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -8,7 +8,7 @@ from Students_app.models import StudentsInfo,RegisteredCourse
 from Teachers_app.models import TeachersList
 from django.contrib import messages
 from Students_app import forms
-from Students_app.forms import StudentForm,StudentLinkForm,loginForm,CourseRegistrationForm
+from Students_app.forms import StudentForm,StudentLinkForm,loginForm,CourseRegistrationForm,updateStudentProfile
 # Create your views here.
 
 def studentRegistration(request):
@@ -26,7 +26,7 @@ def studentRegistration(request):
         form = StudentForm()
         form2 = StudentLinkForm()
 
-    return render(request,'Teachers_app/newstudent_registration.html',context={'form':form,'form2':form2})
+    return render(request,'Admin_panel/add_teacher.html',context={'form':form,'form2':form2})
 def indexView(request):
     current_user = request.user
     user_id = current_user.id
@@ -60,22 +60,19 @@ def StudentProfile(request):
 
 
 def StudentProfileUpdate(request):
-    if request.method=='POST':
-        form = StudentForm(data=request.POST)
-        form2 = StudentLinkForm(data=request.POST)
-        if form.is_valid() and form2.is_valid():
-            user = form.save()
-            user.set_password(user.password)
-            user.save()
-            user_info = form2.save(commit=False)
-            user_info.userId = user
-            user_info.save()
-    return render(request, 'Students_app/newstudent_registration.html', context={'form': form, 'form2': form2})
+    studentId = request.user.id
 
-# def userLogin(request):
-#     form = AuthenticationForm()
-#     diction = {'form':form}
-#     return render(request,'Students_app/login.html', context=diction)
+    studentInfo = StudentsInfo.objects.get(userId__pk=studentId)
+    form = updateStudentProfile(instance=studentInfo)
+
+    if request.method == 'POST':
+        form =updateStudentProfile(request.POST,instance=studentInfo)
+
+        if form.is_valid():
+            form.save()
+
+    return render(request, 'Students_app/update_profile.html', context={'form': form})
+
 
 def userAuthentication(request):
     form = loginForm()

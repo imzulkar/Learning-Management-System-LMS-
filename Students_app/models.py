@@ -1,17 +1,24 @@
 from django.db import models
 from django.contrib.auth.models import User
 from Teachers_app.models import TeachersList
-from Accademic_details.models import Course,Semester
+from Admin_panel.models import Course,Semester
 # Create your models here.
 
 class StudentsInfo(models.Model):
     userId = models.OneToOneField(User, on_delete=models.CASCADE)
     studentID = models.IntegerField()
     student = models.BooleanField(default=True)
-    father_name = models.CharField(max_length=40)
-    mother_name = models.CharField(max_length=40)
-    address = models.CharField(max_length=100)
-    phone = models.IntegerField()
+    father_name = models.CharField(max_length=40,blank=True)
+    mother_name = models.CharField(max_length=40,blank=True)
+    address = models.CharField(max_length=100,blank=True)
+    phone = models.IntegerField(blank=True,null=True)
+    dateOfBirth = models.DateField(blank=True,null=True)
+    gender = models.CharField(max_length=10,blank=True)
+    religion = models.CharField(max_length=20,blank=True)
+    nationality = models.CharField(max_length=20,blank=True)
+    nationalId = models.IntegerField(blank=True,null=True)
+
+
 
     def __str__(self):
         return str(self.studentID)
@@ -41,3 +48,12 @@ class RegisteredCourse(models.Model):
     def __str__(self):
         template = '{0.student}, {0.registeredCourse}, {0.registeredSemester}'
         return template.format(self)
+
+
+class StudentFeedbackModel(models.Model):
+    student = models.CharField(max_length=70, default='Anonymous')
+    header = models.CharField(max_length=200)
+    feedback = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.header

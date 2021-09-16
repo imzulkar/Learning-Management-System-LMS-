@@ -23,5 +23,6 @@ urlpatterns = [
     path('teacher/',include('Teachers_app.urls')),
     path('',include('Students_app.urls')),
     path('chat/',include('chat_app.urls')),
+    path('admin_panel/',include('Admin_panel.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
