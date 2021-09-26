@@ -45,7 +45,7 @@
         <!-- User Info-->
         <div class="sidenav-header-inner text-center"><img src="{% static 'Students_app/img/avatar-7.jpg'%}" alt="person"
             class="img-fluid rounded-circle">
-          <h2 class="h5">{{ user.username}}</h2><span>Web Developer</span>
+          <h2 class="h5">{{ user.username}}</h2><span>{{ user.email }}</span>
         </div>
         <!-- Small Brand information, appears on minimized sidebar-->
         <div class="sidenav-header-logo"><a href="index.html" class="brand-small text-center"> <strong>B</strong><strong
@@ -63,6 +63,7 @@
           <li><a href="tables.html"> <i class="fa fa-key"></i>Password Change </a></li>
           <li><a href="tables.html"> <i class="fa fa-th-list"></i>Payment Ledger </a></li>
           <li><a href="tables.html"> <i class="fa fa-check-square-o"></i>Registration/Exam Clearance </a></li>
+          <li><a href="{% url 'Students_app:chat' %}"> <i class="fa fa-text-width"></i>Live Chat </a></li>
             {% endif %}
           <li><a href="tables.html"> <i class="fa fa-plus-circle"></i>Student Application </a></li>
 

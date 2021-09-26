@@ -2,7 +2,14 @@ from django.forms import ModelForm
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from Students_app.models import StudentsInfo,RegisteredCourse
+from Students_app.models import StudentsInfo,RegisteredCourse,MarksDistribution
+
+
+
+class MarkDistributionForm(ModelForm):
+    class Meta:
+        model = MarksDistribution
+        fields = ('student',)
 
 class StudentForm(UserCreationForm):
     class Meta:
@@ -15,7 +22,7 @@ class StudentForm(UserCreationForm):
 class StudentLinkForm(ModelForm):
     class Meta:
         model = StudentsInfo
-        fields= ('studentID',)
+        fields= ('studentID','batchId')
 
 class DateInput(forms.DateInput):
     input_type = "date"

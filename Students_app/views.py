@@ -4,17 +4,19 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
-from Students_app.models import StudentsInfo,RegisteredCourse
+from Students_app.models import StudentsInfo,RegisteredCourse,MarksDistribution
 from Teachers_app.models import TeachersList
+from chat_app.views import main_view
 from django.contrib import messages
 from Students_app import forms
-from Students_app.forms import StudentForm,StudentLinkForm,loginForm,CourseRegistrationForm,updateStudentProfile
+from Students_app.forms import StudentForm,StudentLinkForm,loginForm,CourseRegistrationForm,updateStudentProfile,MarkDistributionForm
 # Create your views here.
 
 def studentRegistration(request):
-    if request.method=='POST':
+    if request.method == 'POST':
         form = StudentForm(data=request.POST)
         form2 = StudentLinkForm(data=request.POST)
+
         if form.is_valid() and form2.is_valid():
             user = form.save()
             user.set_password(user.password)
@@ -22,9 +24,12 @@ def studentRegistration(request):
             user_info = form2.save(commit=False)
             user_info.userId = user
             user_info.save()
+
     else:
         form = StudentForm()
         form2 = StudentLinkForm()
+
+
 
     return render(request,'Admin_panel/add_teacher.html',context={'form':form,'form2':form2})
 def indexView(request):
@@ -61,7 +66,6 @@ def StudentProfile(request):
 
 def StudentProfileUpdate(request):
     studentId = request.user.id
-
     studentInfo = StudentsInfo.objects.get(userId__pk=studentId)
     form = updateStudentProfile(instance=studentInfo)
 

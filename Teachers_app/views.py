@@ -4,9 +4,11 @@ from .forms import TeachersListForm,loginForm,RegisteredCourseForm
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from Teachers_app.models import TeachersList,TeachersFaculty,TeachersDepartment,TeachersDesignation
-from Students_app.forms import StudentForm,StudentLinkForm
+from Students_app.forms import StudentForm,StudentLinkForm,MarkDistributionForm
+from Students_app.models import MarksDistribution,StudentsInfo,RegisteredCourse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.views.generic import UpdateView,CreateView,ListView,DetailView
 # Create your views here.
 # @login_required(login_url='Teachers_app:teacherslogin')
 def index(request):
@@ -63,13 +65,21 @@ def NewStudentRegistration(request):
     if request.method=='POST':
         form = StudentForm(data=request.POST)
         form2 = StudentLinkForm(data=request.POST)
+        autoGenerate = MarkDistributionForm()
         if form.is_valid() and form2.is_valid():
-            user = form.save()
+            user = form.save(commit=False)
             user.set_password(user.password)
             user.save()
             user_info = form2.save(commit=False)
             user_info.userId = user
             user_info.save()
+            autoGenerate.is_valid()
+
+            print(user_info)
+            MarksDistribution.objects.create(student=user_info)
+            # autoGenerate.student = user_info
+            # print(autoGenerate.student)
+            # autoGenerate.save()
     else:
         form = StudentForm()
         form2 = StudentLinkForm()
@@ -80,4 +90,37 @@ def NewStudentRegistration(request):
 def TeacherLogout(request):
     logout(request)
     return HttpResponseRedirect(reverse('Teachers_app:teacherslogin'))
+
+
+
+# Marks
+class Students_list(ListView):
+    model = User
+    context_object_name = 'students'
+    queryset = User.objects.filter(students_info__student=True)
+    template_name = 'Teachers_app/students_list.html'
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+
+
+
+
+
+class AddMarks(UpdateView):
+    model = MarksDistribution
+    fields = ['quiz_1','quiz_2','quiz_3','Assignment','presentation','mid','final','mid_improvement']
+    context_object_name = 'marks'
+    template_name = 'Teachers_app/marks_update.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        return context
+
+
+#
+# def CourseInstructor(request):
+
+
+
 

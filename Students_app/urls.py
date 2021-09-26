@@ -12,6 +12,7 @@ urlpatterns =[
     path('course_register/',views.CourseRegistration,name='course_register'),
     path('profile/',views.StudentProfile,name='student_profile'),
     path('updateprofile/',views.StudentProfileUpdate,name='StudentProfileUpdate'),
+    path('livechat/',views.main_view,name='chat'),
 
 
 

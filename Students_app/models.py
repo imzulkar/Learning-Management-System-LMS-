@@ -1,11 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 from Teachers_app.models import TeachersList
-from Admin_panel.models import Course,Semester
+from Admin_panel.models import Course,Semester,BatchInfo
+from django.shortcuts import reverse
 # Create your models here.
 
 class StudentsInfo(models.Model):
-    userId = models.OneToOneField(User, on_delete=models.CASCADE)
+    userId = models.OneToOneField(User, on_delete=models.CASCADE,related_name='students_info')
+    batchId = models.ForeignKey(BatchInfo,on_delete=models.CASCADE,related_name='batch_info',default=1)
     studentID = models.IntegerField()
     student = models.BooleanField(default=True)
     father_name = models.CharField(max_length=40,blank=True)
@@ -17,6 +19,7 @@ class StudentsInfo(models.Model):
     religion = models.CharField(max_length=20,blank=True)
     nationality = models.CharField(max_length=20,blank=True)
     nationalId = models.IntegerField(blank=True,null=True)
+
 
 
 
@@ -33,15 +36,18 @@ class MarksDistribution(models.Model):
     mid = models.IntegerField(default=0)
     final = models.IntegerField(default=0)
     mid_improvement = models.IntegerField(default=0)
-    teacher = models.ForeignKey(TeachersList,on_delete=models.CASCADE)
+
 
     def __str__(self):
         avg =str((self.quiz_1+self.quiz_2+self.quiz_3)/3)
         sid = str(self.student)
         return 'Quid Avg:'+avg +'----ID:'+ sid
 
+    def get_absolute_url(self):
+        return reverse('Teachers_app:student_list')
+
 class RegisteredCourse(models.Model):
-    student = models.ForeignKey(StudentsInfo,on_delete=models.CASCADE)
+    student = models.ForeignKey(StudentsInfo,on_delete=models.CASCADE, related_name='abc')
     registeredCourse = models.ForeignKey(Course,on_delete=models.CASCADE)
     registeredSemester = models.ForeignKey(Semester,on_delete=models.CASCADE)
     # info = str(student) + ' '+ str(registeredCourse)+ ' '+str(registeredSemester)

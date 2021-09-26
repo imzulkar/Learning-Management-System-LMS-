@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Course,Semester
+from . import models
 # Register your models here.
-admin.site.register(Course)
-admin.site.register(Semester)
+admin.site.register(models.Course)
+admin.site.register(models.Semester)
+admin.site.register(models.OfferedCourse)
+admin.site.register(models.BatchInfo)

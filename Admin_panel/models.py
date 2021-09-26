@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse,reverse_lazy
 from django.contrib.auth.models import User
+from Teachers_app.models import TeachersList
 # Create your models here.
 
 
@@ -31,6 +32,16 @@ class OfferedCourse(models.Model):
 
     def __str__(self):
         return self.courseName + "Cost: "+ str(self.courseCost)
+
+
+
+class BatchInfo(models.Model):
+    batch = models.IntegerField(null=True,default=1)
+    section = models.CharField(max_length=4, null=True,default='A')
+    assignTeacher = models.ForeignKey(TeachersList,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.batch) + '-'+self.section
 
 
 #

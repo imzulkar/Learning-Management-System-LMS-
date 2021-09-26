@@ -10,6 +10,8 @@ urlpatterns = [
     path('register/',views.NewStudentRegistration,name='student_register'),
     path('logout/',views.TeacherLogout,name='logout'),
     path('profile/',views.TeachersProfile, name='teaches_profile'),
+    path('marks/<pk>',views.AddMarks.as_view(), name='marks'),
+    path('student_list/',views.Students_list.as_view(), name='student_list'),
 
 
 
