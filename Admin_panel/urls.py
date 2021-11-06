@@ -12,6 +12,10 @@ urlpatterns =[
     path('teacherdetails/<pk>',views.TeacherDetailView.as_view(),name='teacher_details'),
     path('addteacher/',views.AddNewTeacherView,name='add_teacher'),
     path('addstudent/',studentRegistration,name='add_student'),
+    path('login/',views.AdminAuthentication,name='admin_authentication'),
+    path('logout/',views.Admin_logOut,name='logout'),
+    path('',views.AdminDashboard,name='admin_dashboard'),
+
 
 
 ]

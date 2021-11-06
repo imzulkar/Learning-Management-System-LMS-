@@ -5,9 +5,50 @@ from django.views.generic.edit import FormMixin
 from .models import Course,OfferedCourse,Semester
 from Teachers_app.models import TeachersList
 from django.contrib.auth.models import User
-from .forms import TeachersInfoForm,AddTeacherForm
+from .forms import TeachersInfoForm,AddTeacherForm,loginForm
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login,logout,authenticate
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import HttpResponseRedirect,reverse,redirect,HttpResponse
 
 # Create your views here.
+
+def AdminAuthentication(request):
+    form = loginForm()
+    if request.method =='POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            # print(username, password)
+
+            user = authenticate(username=username,password=password)
+
+            if user is not None:
+                print(user,user.id)
+                try:
+
+                    if user.is_active:
+                        # print("Active")
+                        if user.is_superuser:
+                            login(request,user)
+                            return HttpResponseRedirect(reverse('Admin_panel:admin_dashboard'))
+                except:
+                    print('Login Failed')
+                    return redirect('Admin_panel:admin_authentication')
+
+    return render(request,'Admin_panel/admin-login.html',context={'form':form})
+login_required(login_url='Admin_panel:login')
+def AdminDashboard(request):
+
+
+
+    return render(request,'Admin_panel/admin_panel_base.html', context={})
+
+def Admin_logOut(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('Admin_panel:admin_authentication'))
+
 class SubjectListView(ListView):
     context_object_name = 'subjects_list'
     model = Course
