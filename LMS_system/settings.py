@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ui&8&3q7)#w7hk2ormib2m_uvde*^i&m$8gt(7-8(adnd=-+xe
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -57,6 +57,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+# SSL Activated
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+
 
 ROOT_URLCONF = 'LMS_system.urls'
 
