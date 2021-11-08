@@ -9,6 +9,7 @@ from Teachers_app.models import TeachersList
 from chat_app.views import main_view
 from django.contrib import messages
 from Students_app import forms
+import classroomAPI as cAPI
 from Students_app.forms import StudentForm,StudentLinkForm,loginForm,CourseRegistrationForm,updateStudentProfile,MarkDistributionForm
 # Create your views here.
 
@@ -119,6 +120,13 @@ def CourseRegistration(request):
 
     diction = {'form': form}
     return render(request,'Students_app/test.html',context=diction)
+
+
+def classroomDetails(request):
+    q = cAPI.lassroomAPIquickstart.main()
+    print(type(q))
+    return HttpResponse(q)
+
 
 
 @login_required

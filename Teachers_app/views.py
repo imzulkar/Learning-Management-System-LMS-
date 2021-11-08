@@ -112,10 +112,10 @@ class AddMarks(UpdateView):
     fields = ['quiz_1','quiz_2','quiz_3','Assignment','presentation','mid','final','mid_improvement']
     context_object_name = 'marks'
     template_name = 'Teachers_app/marks_update.html'
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #
+    #     return context
 
 
 #

@@ -37,11 +37,14 @@ def main():
     courses = results.get('courses', [])
 
     if not courses:
-        print('No courses found.')
+        str ='No courses found.'
     else:
         print('Courses:')
+        l = []
         for course in courses:
-            print(course['name'])
+            l.append(course['name'])
+        return l
+
 
 if __name__ == '__main__':
-    main()
+    print(main())
