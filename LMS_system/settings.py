@@ -93,14 +93,25 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 #     }
 # }
 
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'd37phla7jrn050',
+        'USER': 'tjqqwwudwxrocs',
+        'PASSWORD': '52e70a8866be91f83adc4d1a21898f0009a53c0ad53da70ae8b620860956a428',
+        'HOST': 'ec2-54-220-14-54.eu-west-1.compute.amazonaws.com',
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
