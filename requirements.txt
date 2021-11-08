@@ -5,4 +5,3 @@ gunicorn==20.1.0
 Pillow==8.4.0
 psycopg2==2.9.1
 requests==2.26.0
-whitenoise
