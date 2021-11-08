@@ -1,1 +1,1 @@
-web: gunicorn searchapp.wsgi
+web: gunicorn LMS_system.wsgi
