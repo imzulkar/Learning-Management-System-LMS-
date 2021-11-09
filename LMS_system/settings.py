@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'LMS_system.wsgi.application'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
+"""===============MySQL==============="""
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
@@ -97,7 +97,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 #     }
 # }
 
-#
+"""===============sqllite3==============="""
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -105,7 +105,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 #     }
 # }
 
-
+"""===============postgre==============="""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -152,7 +152,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-STATIC_ROOT = BASE_DIR.joinpath('staticfiles')
+STATIC_ROOT = BASE_DIR.joinpath('/static/')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
